@@ -69,11 +69,12 @@ userSchema.pre("save",async function(next){ // dont write arrow function here el
 })
 
 // defining the custom methods related to users
-userSchema.methods.comparePassword = async(plainPassword)=>{
-    return await bcrypt.compare(plainPassword,this.password )
+userSchema.methods.isPasswordCorrect = async function(password) {
+    return await bcrypt.compare(password,this.password) 
 }
 
-userSchema.methods.generateJWTToken = async()=>{
+
+userSchema.methods.generateJWTToken = async function(){
     return await jwt.sign(
         {id:this._id, role:this.role,subscription:this.subscription, email:this.email}, // payload data
         process.env.JWT_SECRET,

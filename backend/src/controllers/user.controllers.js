@@ -52,7 +52,7 @@ const registerUser = asyncHandler(async(req,res)=>{
         throw new ApiError(500,"something went wrong while registering the user")
     }
 
-    const accessToken = await createdUser.generateJWTToken
+    const accessToken = await createdUser.generateJWTToken(createdUser._id)
 
     return res.status(200)
     .cookie("accessToken",accessToken)
@@ -66,4 +66,33 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 
 
-export {registerUser}
+const loginUser = asyncHandler(async(req,res)=>{
+    const {email,password} = req.body
+    if(!email|| ! password){
+        throw new ApiError(400,"all credentials are required")
+    }
+
+    const user = await User.findOne({email}).select('+password')
+    console.log(user)
+
+    if(!user){
+        throw new ApiError(400,"user with the given email id doent exists")
+    }
+
+    const isPasswordCorrect = await user.isPasswordCorrect(password)
+
+    if(!isPasswordCorrect){
+        throw new ApiError(400,"invalid password")
+    }
+
+    const accessToken = user.generateJWTToken(user._id)
+
+    return res.status(200)
+    .cookie("accessToken",accessToken)
+    .json(new ApiResponse(200,{
+        user,
+        accessToken
+    }, "user logged in successfully"))
+})
+
+export {registerUser,loginUser}
