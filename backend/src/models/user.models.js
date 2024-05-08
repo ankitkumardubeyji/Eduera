@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt"
 import mongoose  from "mongoose";
 import jwt from "jsonwebtoken"
+import crypto from "crypto"
+
 
 const userSchema =  mongoose.Schema({
     fullName:{
@@ -85,7 +87,7 @@ userSchema.methods.generateJWTToken = async function(){
 }
 
 // custom method for generating the reset password token
-userSchema.generatePasswordResetToken = async()=>{
+userSchema.methods.generatePasswordResetToken = async function(){
     
   // creating a random token using nodes built in crypto module  
     const resetToken = crypto.randomBytes(20).toString('hex');
