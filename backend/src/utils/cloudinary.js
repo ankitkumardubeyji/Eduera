@@ -1,6 +1,7 @@
 // here we are uploading the file from the localstorage server to cloudinary and then removing from the local server
 
 import {v2 as cloudinary} from "cloudinary"
+import { error } from "console"
 import fs from "fs"
 
 cloudinary.config({
@@ -16,16 +17,22 @@ export const uploadOnCloudinary = async(localFilePath)=>{
         }
 
         // upload the file on cloudinary
-       const response =  await cloudinary.uploader(localFilePath,{
-        resource_type:"auto "
-       }) 
+      
+       const response = await cloudinary.uploader.upload(localFilePath,{
+        resource_type:"auto"
+    })
+
+ 
+
 
        fs.unlinkSync(localFilePath ) // remove the temporarily saved local file 
-
+       return response;
     }
 
     catch(err){
         fs.unlinkSync(localFilePath) 
+        console.log(error)
+        
     }
 }
 

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import mongoose  from "mongoose";
-import subscriptions from "razorpay/dist/types/subscriptions";
+import jwt from "jsonwebtoken"
 
 const userSchema =  mongoose.Schema({
     fullName:{
@@ -34,6 +34,8 @@ const userSchema =  mongoose.Schema({
         status:String, 
     },
 
+    
+
     avatar:{
         public_id:{
             type:String, 
@@ -56,12 +58,13 @@ const userSchema =  mongoose.Schema({
 },{timestamps:true})
 
 // middleware for hashing the password before saving to the database
-userSchema.pre('save',async (next)=>{
-    // if password not modified then dont hash it
-    if(!this.isModified("password")){
-        return next()
-    }
 
+
+userSchema.pre("save",async function(next){ // dont write arrow function here else you wont be able to have context of this
+    if(!this.isModified("password")){
+        return next ();
+    }
+    console.log("here"+this.password)
     this.password = await bcrypt.hash(this.password,10)
 })
 
