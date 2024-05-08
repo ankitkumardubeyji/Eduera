@@ -95,4 +95,12 @@ const loginUser = asyncHandler(async(req,res)=>{
     }, "user logged in successfully"))
 })
 
-export {registerUser,loginUser}
+// for logging out we just need to clear the access token
+const logout = asyncHandler(async(req,res)=>{
+    return res.status(200)
+    .clearCookie("accessToken")
+    .json(new ApiResponse(200,{},"user logged out successfully"))
+})
+
+
+export {registerUser,loginUser,logout}
