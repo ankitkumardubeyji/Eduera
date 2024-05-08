@@ -78,7 +78,7 @@ userSchema.methods.isPasswordCorrect = async function(password) {
 
 userSchema.methods.generateJWTToken = async function(){
     return await jwt.sign(
-        {id:this._id, role:this.role,subscription:this.subscription, email:this.email}, // payload data
+        {_id:this._id, role:this.role,subscription:this.subscription, email:this.email}, // payload data
         process.env.JWT_SECRET,
         {
             expiresIn:process.env.JWT_EXPIRY

@@ -86,7 +86,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         throw new ApiError(400,"invalid password")
     }
 
-    const accessToken = user.generateJWTToken(user._id)
+    const accessToken = await user.generateJWTToken(user._id)
 
     return res.status(200)
     .cookie("accessToken",accessToken)

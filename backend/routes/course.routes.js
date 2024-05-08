@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { addLectureToCourseById, createCourse, deleteLectureById, getAllCourses, getLectureById, getLecturesByCourseId, removeCourses, updateCourse } from "../src/controllers/course.controller.js";
 import { upload } from "../src/middlewares/multer.middleware.js";
+import { verifyJWT } from "../src/middlewares/auth.middleware.js";
 
 const router = Router()
 
 
-
+router.use(verifyJWT);
 router.route("/").get(getAllCourses)
 router.route("/create").post(upload.fields([
     {
