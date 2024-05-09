@@ -9,6 +9,12 @@ import Login from './Pages/User/Login'
 import Register from './Pages/User/Register'
 
 import Home from './Pages/User/Home'
+import About from './Pages/User/About'
+import Contact from './Pages/User/Contact'
+import Courses from './Pages/Courses/CourseList'
+import CourseDescription from './Pages/Courses/CourseDescription'
+import DisplayLectures from './Pages/Dashboard/DisplayLecture'
+import AddLectures from './Pages/Dashboard/AddLecture'
 
 const RequireAuth = ({ children }) => {
   const data = JSON.parse(localStorage.getItem("data"))
@@ -27,8 +33,14 @@ function App() {
         <Route path='' element={<RequireAuth><Home /></RequireAuth>} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} /> {/* when comes the /about Abou component passed as outlet */} 
-
-        
+         <Route path='about' element ={<About/>} /> 
+         <Route path='contact' element ={<Contact/>} /> 
+         <Route path='courses'>
+            <Route path='' element = {<Courses/>}/>
+          </Route> 
+          <Route path='course/description' element = {<CourseDescription/>}/>
+          <Route path='course/displaylectures' element = {<DisplayLectures/>}/>
+          <Route path='course/addlecture' element = {<AddLectures/>}/>
       </Route>
     )
   )

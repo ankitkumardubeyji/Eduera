@@ -194,6 +194,7 @@ const addLectureToCourseById = asyncHandler(async(req,res)=>{
 
     console.log(lectureLocalFile)
     const lecture = await uploadOnCloudinary(lectureLocalFile)
+    console.log(lecture)
 
     if(!lecture){
         throw new ApiError(400,"lecture couldnt be uploaded");
