@@ -74,7 +74,7 @@ const loginUser = asyncHandler(async(req,res)=>{
     }
 
     const user = await User.findOne({email}).select('+password')
-    console.log(user)
+   
 
     if(!user){
         throw new ApiError(400,"user with the given email id doent exists")
