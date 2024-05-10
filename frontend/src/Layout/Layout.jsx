@@ -12,6 +12,8 @@ import { Outlet } from 'react-router-dom'  // outlet will only change other than
 
 // beause of the outlet automatic by react-router-dom there will be nesting
 function Layout(){
+
+  const navigate = useNavigate()
  
  // function to hide the drawer on close button click
  const hideDrawer = () => {
@@ -48,7 +50,7 @@ function Layout(){
 
         <div className="drawer-side  w-auto">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-48 sm:w-80 bg-base-100 text-base-content relative h-screen">
+          <ul className="menu p-4 w-48 sm:w-80 bg-base-100 text-base-content relative h-screen" style={{backgroundColor:"#4C4E52",color:"white"}}>
     {/* list items here */}
 
             {/* close button for drawer */}
@@ -96,8 +98,9 @@ function Layout(){
                   <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full">
                     <Link to={"/user/profile"} style={{backgroundColor:"red", padding:"5px 5px"}}>Profile</Link>
                   </button>
-                  <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link >Logout</Link>
+                  <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full blue-background" onClick={()=>navigate("/login")}>
+
+                    <Link  style={{backgroundColor:"blue", padding:"5px 5px"}} onClick={()=>navigate("/login")}>Logout</Link>
                   </button>
                 </div>
               </li>

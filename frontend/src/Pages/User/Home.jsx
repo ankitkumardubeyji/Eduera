@@ -1,9 +1,16 @@
 
 
+import { useEffect } from "react";
 import homePageMainImage from "../../assets/homePageMainImage.png";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "../../Redux/authSlice";
 
 const Home = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+  dispatch(getCurrentUser())
+  })
   return (
 
       <div className="pt-10 text-white flex items-center justify-center gap-10 mx-16 h-[90vh] m-auto">

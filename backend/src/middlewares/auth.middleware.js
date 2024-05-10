@@ -30,3 +30,14 @@ export const verifyJWT = asyncHandler(async(req,res,next)=>{
         throw new ApiError(400,err)
     }
 })
+
+export const authorisedRoles = (...roles) => async(req,res,next)=>{
+    const currentUserRoles = req.user.role;
+    if(!roles.includes(currentUserRoles)){
+            return next(new AppError('You dont have the permission to access these routes '),400);
+    }
+    return next();
+   
+}
+
+// make middleware for authorised subscribers

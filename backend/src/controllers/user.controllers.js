@@ -96,12 +96,22 @@ const loginUser = asyncHandler(async(req,res)=>{
     }, "user logged in successfully"))
 })
 
+const getCurrentUser = asyncHandler(async(req,res)=>{
+    const id = req.user._id;
+    const user = await User.findById(id)
+    return res.status(200)
+    .json(new ApiResponse(200,user,"current user info fetched successfully"))
+})
+
 // for logging out we just need to clear the access token
 const logout = asyncHandler(async(req,res)=>{
     return res.status(200)
     .clearCookie("accessToken")
     .json(new ApiResponse(200,{},"user logged out successfully"))
 })
+
+
+
 
 /*
 The idea of the forget and reset password is as follow 
@@ -200,4 +210,4 @@ const forgotPassword = asyncHandler(async(req,res,next)=>{
 
 
 
-export {registerUser,loginUser,logout,forgotPassword,resetPassword}
+export {registerUser,loginUser,logout,forgotPassword,resetPassword,getCurrentUser}

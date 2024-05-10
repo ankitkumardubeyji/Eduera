@@ -15,6 +15,9 @@ import Courses from './Pages/Courses/CourseList'
 import CourseDescription from './Pages/Courses/CourseDescription'
 import DisplayLectures from './Pages/Dashboard/DisplayLecture'
 import AddLectures from './Pages/Dashboard/AddLecture'
+import Checkout from './Pages/Payment/Checkout'
+import CheckoutSuccess from './Pages/Payment/CheckoutSuccess'
+import CheckoutFail from './Pages/Payment/CheckoutFail'
 
 const RequireAuth = ({ children }) => {
   const data = JSON.parse(localStorage.getItem("data"))
@@ -41,6 +44,11 @@ function App() {
           <Route path='course/description' element = {<CourseDescription/>}/>
           <Route path='course/displaylectures' element = {<DisplayLectures/>}/>
           <Route path='course/addlecture' element = {<AddLectures/>}/>
+
+
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/checkout/fail" element={<CheckoutFail />} />
       </Route>
     )
   )

@@ -1,6 +1,7 @@
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 import {toast} from "react-hot-toast"
 import axios from "axios";
+import { resolveInclude } from "ejs";
 
 
 const initialState = {
@@ -53,6 +54,30 @@ export const validateAccount = createAsyncThunk("auth/validate",async(data)=>{
 })
 
 
+export const getCurrentUser = createAsyncThunk("auth/currentUser",async()=>{
+try {
+        const res = axios.get("/api/v1/users/current")
+        let result = {}
+        toast.promise(res,{
+            loading:"wait getting current user",
+            success:(data)=>{
+            
+                result = data?.data?.data
+                return data?.data?.message 
+            }
+        })
+    
+        await res;
+        return result 
+} catch (error) {
+    toast.error(error.response.message.data)
+}
+})
+
+export const logout = createAsyncThunk("auth/logout",async()=>{
+    
+})
+
 const authSlice = createSlice(
     {
         name:"auth",
@@ -66,6 +91,11 @@ const authSlice = createSlice(
             })
 
             builder.addCase(validateAccount.fulfilled,(state,action)=>{
+                state.data = action.payload
+                localStorage.setItem("data",JSON.stringify(state.data))
+            })
+
+            builder.addCase(getCurrentUser.fulfilled,(state,action)=>{
                 state.data = action.payload
                 localStorage.setItem("data",JSON.stringify(state.data))
             })
