@@ -1,4 +1,4 @@
-import { confirmPasswordReset } from "firebase/auth";
+
 import Course from "../models/course.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
