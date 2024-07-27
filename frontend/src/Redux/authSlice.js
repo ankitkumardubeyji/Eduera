@@ -3,9 +3,22 @@ import {toast} from "react-hot-toast"
 import axios from "axios";
 
 
+const isLoggedInString = localStorage.getItem("isLoggedIn");
+const isLoggedIn = isLoggedInString ? isLoggedInString === 'true' : false;
+
+let data;
+try {
+    const dataString = localStorage.getItem("data");
+    data = dataString ? JSON.parse(dataString) : {};
+} catch (error) {
+    console.error("Error parsing data from localStorage:", error);
+    data = {};
+}
+
+
 
 const initialState = {
-    data:JSON.parse(localStorage.getItem("data")) || {},
+    data:data,
     isLoggedIn:localStorage.getItem("isLoggedIn") || false,
     role:localStorage.getItem("role") || "",
 }
@@ -21,13 +34,15 @@ export const createAccount = createAsyncThunk("/auth/create",async(data)=>{
           
                 result = data?.data?.data?.user 
                 return data?.data?.message
-            }
+            },
+            error:"some problem happened"
         })
 
         await res;
         return result 
     }
     catch(err){
+        console.log(error);
         toast.error(err?.response?.data?.message)
     }
 })
