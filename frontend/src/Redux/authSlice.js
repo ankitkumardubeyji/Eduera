@@ -42,7 +42,7 @@ export const createAccount = createAsyncThunk("/auth/create",async(data)=>{
         return result 
     }
     catch(err){
-        console.log(error);
+        console.log(err);
         toast.error(err?.response?.data?.message)
     }
 })
